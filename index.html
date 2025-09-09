@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Green Earth Project</title>
+
+    <link rel="stylesheet" href="./styles/style.css" />
     <!-- Font Integration  -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -68,9 +70,7 @@
     </header>
 
     <!-- ============= Banner Section ============ -->
-    <section
-      class="h-[320px] bg-[#CFF0DC] flex items-center bg-[url('/assets/hero-leaf1.png'),url('/assets/hero-leaf2.png')] bg-no-repeat bg-['left-bottom','right-bottom']"
-    >
+    <section class="h-[320px] bg-[#CFF0DC] flex items-center banner-bg">
       <div class="w-11/12 text-center space-y-3">
         <h1 class="font-bold text-4xl">Plant a Tree, Grow a Future</h1>
         <p>
@@ -86,16 +86,22 @@
       </div>
     </section>
 
-    <!--  -->
     <!-- ============= Main Section =============== -->
     <section class="pt-12 pb-10">
       <h1 class="text-3xl font-bold text-center pb-8">Choose Your Trees</h1>
+      <!-- Loading Spinner -->
+      <section
+        id="loading-spinner"
+        class="flex justify-center items-center pb-9"
+      >
+        <span class="loading loading-bars loading-xl"></span>
+      </section>
       <div class="flex w-11/12 mx-auto gap-3">
         <!-- Categories Container -->
         <div id="categories-container" class="flex-1">
           <h2 class="font-semibold text-xl mb-3">Categories</h2>
           <button
-            class="hover:bg-green-400 w-full text-left p-1 cursor-pointer"
+            class="hover:bg-green-400 w-full text-left p-1 cursor-pointer rounded-lg category-btn"
           >
             All Trees
           </button>
@@ -104,7 +110,13 @@
         <div id="trees-container" class="flex-3 grid grid-cols-3 gap-2"></div>
         <!-- Add to Cart -->
         <div id="cart-container" class="flex-1 bg-white rounded-lg">
-          <h3 class="font-bold text-lg px-4 pt-2">Your Cart</h3>
+          <h3 class="font-bold text-lg px-4 pt-2 pb-3">Your Cart</h3>
+
+          <ul id="cart-List" class="space-y-2"></ul>
+          <hr class="mt-2" />
+          <p class="mt-4 font-bold px-4">
+            <span class="pr-22">Total:</span> ৳<span id="total-Price">0</span>
+          </p>
         </div>
       </div>
     </section>

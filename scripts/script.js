@@ -4,14 +4,11 @@ const loadCategories = () => {
     .then((data) => displayCategories(data.categories));
 };
 
-// ============== Load All Trees ===============
-
-// category: "Fruit Tree";
-// description: "A fast-growing tropical tree that produces delicious, juicy mangoes during summer. Its dense green canopy offers shade, while its sweet fruits are rich in vitamins and minerals.";
-// id: 1;
-// image: "https://i.ibb.co.com/cSQdg7tf/mango-min.jpg";
-// name: "Mango Tree";
-// price: 500;
+// ================= Show Loading ==========================
+const showLoading = (show) => {
+  const loadingSpinner = document.getElementById("loading-spinner");
+  loadingSpinner.classList.toggle("hidden", !show);
+};
 
 const loadTrees = () => {
   fetch("https://openapi.programming-hero.com/api/plants")
@@ -23,6 +20,7 @@ const loadTrees = () => {
 
 const displayTrees = (trees) => {
   const treesContainer = document.getElementById("trees-container");
+  treesContainer.innerHTML = "";
   trees.forEach((tree) => {
     const div = document.createElement("div");
     div.innerHTML = `
@@ -45,6 +43,7 @@ const displayTrees = (trees) => {
                 <p class="font-semibold"><span>৳</span>${tree.price}</p>
               </div>
               <button
+              onclick="addToCart('${tree.name}', ${tree.price})"
                 class="bg-[#15803D] text-white w-full rounded-2xl py-1 cursor-pointer hover:bg-green-900"
               >
                 Add to Cart
@@ -57,17 +56,87 @@ const displayTrees = (trees) => {
   });
 };
 
-// ============================================================================
+// =================== Display Categories==========================
+const categoriesContainer = document.getElementById("categories-container");
 const displayCategories = (items) => {
-  const categoriesContainer = document.getElementById("categories-container");
   items.forEach((item) => {
     const div = document.createElement("div");
     div.innerHTML = `
-          <p class="my-2 p-1 hover:bg-green-400 cursor-pointer">${item.category_name}</p> 
+          <button onclick="loadPlantsByCategory('${item.id}', this)"  class="my-2 p-1 hover:bg-green-400 rounded-lg cursor-pointer w-full text-left category-btn">${item.category_name}</button> 
     `;
 
     categoriesContainer.appendChild(div);
   });
+};
+
+// Load Plants by Category
+
+const loadPlantsByCategory = (id, btn) => {
+  showLoading(true);
+
+  const allButtons = categoriesContainer.querySelectorAll("button");
+  allButtons.forEach((button) => button.classList.remove("bg-green-300"));
+  if (btn) {
+    btn.classList.add("bg-green-300");
+  }
+
+  fetch(`https://openapi.programming-hero.com/api/category/${id}`)
+    .then((res) => {
+      if (!res.ok) {
+        document.getElementById("trees-container").innerHTML = `
+          <p class="text-red-600">Failed to load plants. Status: ${res.status}</p>
+        `;
+        showLoading(false);
+        return null;
+      }
+      return res.json();
+    })
+    .then((data) => {
+      if (!data) return;
+
+      const trees = data.plants || [];
+
+      if (trees.length === 0) {
+        document.getElementById("trees-container").innerHTML = `
+          <p class="text-gray-600">No plants found in this category.</p>
+        `;
+        showLoading(false);
+        return;
+      }
+
+      displayTrees(trees);
+
+      showLoading(false);
+    });
+};
+
+// ============ Add to Cart ================
+let total = 0;
+const cartList = document.getElementById("cart-List");
+const totalPrice = document.getElementById("total-Price");
+const addToCart = (name, price) => {
+  total += price;
+  totalPrice.innerText = total;
+
+  const li = document.createElement("li");
+  li.className =
+    "flex justify-between items-center bg-gray-100 px-3 py-2 rounded";
+  li.innerHTML = `
+    <span>${name}</span>
+    <span>
+      ৳${price}
+      <button onclick="removeFromCart(this, ${price})" class="ml-2 text-red-500 cursor-pointer">❌</button>
+    </span>
+  `;
+  cartList.appendChild(li);
+};
+
+// ============ Remove From Cart ================
+// Remove from Cart
+const removeFromCart = (btn, price) => {
+  total -= price;
+  totalPrice.innerText = total;
+  btn.closest("li").remove();
 };
 
 // =========== Load Function Call ==============
