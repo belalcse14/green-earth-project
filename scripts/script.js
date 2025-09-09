@@ -1,3 +1,4 @@
+// ===================== Load Categories ==================
 const loadCategories = () => {
   fetch("https://openapi.programming-hero.com/api/categories")
     .then((res) => res.json())
@@ -10,13 +11,14 @@ const showLoading = (show) => {
   loadingSpinner.classList.toggle("hidden", !show);
 };
 
+// ================ Load Trees ==================
 const loadTrees = () => {
   fetch("https://openapi.programming-hero.com/api/plants")
     .then((res) => res.json())
     .then((data) => displayTrees(data.plants));
 };
 
-// ===================== Display Function ========================
+// ===================== Display Trees ========================
 
 const displayTrees = (trees) => {
   const treesContainer = document.getElementById("trees-container");
@@ -69,16 +71,27 @@ const displayCategories = (items) => {
   });
 };
 
-// Load Plants by Category
+//========== Load All Trees By All Trees Button =============
+const allTrees = document.getElementById("all-trees");
+allTrees.addEventListener("click", function () {
+  showLoading(true);
+  loadTrees();
+  setActiveButton(allTrees);
+  showLoading(false);
+});
 
+// ============== Set Active Button For Toggling ===========
+const setActiveButton = (activeButton) => {
+  const allButtons = categoriesContainer.querySelectorAll("button");
+  allButtons.forEach((btn) => btn.classList.remove("bg-green-300"));
+  activeButton.classList.add("bg-green-300");
+};
+
+// Load Plants by Category
 const loadPlantsByCategory = (id, btn) => {
   showLoading(true);
 
-  const allButtons = categoriesContainer.querySelectorAll("button");
-  allButtons.forEach((button) => button.classList.remove("bg-green-300"));
-  if (btn) {
-    btn.classList.add("bg-green-300");
-  }
+  setActiveButton(btn);
 
   fetch(`https://openapi.programming-hero.com/api/category/${id}`)
     .then((res) => {
