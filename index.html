@@ -72,8 +72,10 @@
     <!-- ============= Banner Section ============ -->
     <section class="h-[320px] bg-[#CFF0DC] flex items-center banner-bg">
       <div class="w-11/12 text-center space-y-3">
-        <h1 class="font-bold text-4xl">Plant a Tree, Grow a Future</h1>
-        <p>
+        <h1 class="font-bold text-2xl md:text-4xl">
+          Plant a Tree, Grow a Future
+        </h1>
+        <p class="text-sm md:text-lg">
           Join our mission to plant 1 million trees and make the Earth greener
           for future <br />
           generations.
@@ -96,7 +98,7 @@
       >
         <span class="loading loading-bars loading-xl hidden"></span>
       </section>
-      <div class="flex w-11/12 mx-auto gap-3">
+      <div class="flex flex-col md:flex-row w-11/12 mx-auto gap-3">
         <!-- Categories Container -->
         <div id="categories-container" class="flex-1">
           <h2 class="font-semibold text-xl mb-3">Categories</h2>
@@ -108,7 +110,10 @@
           </button>
         </div>
         <!-- Trees Container -->
-        <div id="trees-container" class="flex-3 grid grid-cols-3 gap-2"></div>
+        <div
+          id="trees-container"
+          class="flex-3 grid grid-cols-2 md:grid-cols-3 gap-2"
+        ></div>
         <!-- Add to Cart -->
         <div id="cart-container" class="flex-1 bg-white rounded-lg">
           <h3 class="font-bold text-lg px-4 pt-2 pb-3">Your Cart</h3>
@@ -156,7 +161,7 @@
     <!-- ============== About Campaign ============ -->
     <section class="w-3/5 mx-auto pb-10">
       <h1 class="text-center my-6 font-bold text-2xl">About the Campaign</h1>
-      <div class="flex gap-5 justify-center items-center">
+      <div class="flex flex-col md:flex-row gap-5 justify-center items-center">
         <img
           class="flex-1 w-[460px] h-[460px]"
           src="./assets/about.png"
@@ -183,7 +188,7 @@
       <div class="w-11/12 mx-auto">
         <h1 class="text-center font-bold text-2xl mb-8">Our Impact</h1>
         <!-- Grid Container -->
-        <div class="grid grid-cols-3 gap-10">
+        <div class="grid grid-cols-3 gap-3 md:gap-10">
           <div class="bg-white py-8 px-3 text-center rounded-xl">
             <h1 class="text-green-700 font-bold text-xl">500K+</h1>
             <p>Trees Planted</p>
@@ -199,6 +204,63 @@
         </div>
       </div>
     </section>
+
+    <!-- Plant a Tree Today Section -->
+    <section
+      class="min-h-100 md:min-h-screen flex flex-col items-center justify-center px-4 bg-green-800"
+    >
+      <div class="text-center mb-6">
+        <h2 class="text-white text-2xl md:text-3xl font-semibold">
+          Plant a Tree Today
+        </h2>
+      </div>
+
+      <!-- ================  Donation Tree Form ============== -->
+      <div class="bg-green-700 p-6 rounded-xl shadow-lg w-full max-w-md">
+        <form action="#" method="POST" class="space-y-4">
+          <input
+            type="text"
+            placeholder="Your Name"
+            class="w-full px-4 py-2 rounded-lg border bg-white border-gray-300 focus:outline-yellow-400"
+            required
+          />
+
+          <input
+            type="email"
+            placeholder="Your Email Address"
+            class="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 focus:outline-yellow-400"
+            required
+          />
+
+          <!-- Dropdown for Number of Trees -->
+          <select
+            class="w-full px-4 py-2 rounded-lg bg-white border border-gray-300 focus:outline-yellow-400"
+            required
+          >
+            <option value="">Number of Trees</option>
+            <option value="1">1 Tree</option>
+            <option value="2">5 Trees</option>
+            <option value="5">10 Trees</option>
+            <option value="10">20 Trees</option>
+            <option value="20">20 Trees</option>
+          </select>
+
+          <button
+            type="submit"
+            class="w-full cursor-pointer bg-yellow-400 hover:bg-yellow-500 text-green-900 font-semibold py-2 rounded-full transition duration-300"
+          >
+            Donate Now
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============== Footer Section =============== -->
+    <footer class="bg-green-900 py-4">
+      <div class="text-center text-gray-200 text-sm">
+        &copy; 2025 Green Earth. All Rights Reserved.
+      </div>
+    </footer>
 
     <!-- =============== JS Linked ================ -->
     <script src="./scripts/script.js"></script>
