@@ -29,11 +29,11 @@ const displayTrees = (trees) => {
                 <div class="p-2 bg-white rounded-lg">
             <div class="space-y-2">
               <img
-                class="w-[260px] h-[150px] mx-auto"
+                class="w-[260px] h-[150px] mx-auto object-cover"
                 src="${tree.image}"
                 alt=""
               />
-              <h1 class="font-bold">${tree.name}</h1>
+              <h1 onclick="showModals(${tree.id})" class="font-bold cursor-pointer">${tree.name}</h1>
               <p class="text-sm truncate">${tree.description}</p>
               <div class="flex justify-between">
                 <p
@@ -58,6 +58,33 @@ const displayTrees = (trees) => {
   });
 };
 
+// ================= Modals Section with Tree Details ==============
+
+const showModals = (id) => {
+  fetch(`https://openapi.programming-hero.com/api/plant/${id}`)
+    .then((res) => res.json())
+    .then((data) => {
+      const tree = data.plants;
+
+      // Populate Modal Data
+      document.getElementById("modal-tree-image").src = tree.image;
+      document.getElementById("modal-tree-name").innerText = tree.name;
+
+      document.getElementById("modal-tree-description").innerText =
+        tree.description;
+      document.getElementById("modal-tree-category").innerText = tree.category;
+      document.getElementById("modal-tree-price").innerText = `৳ ${tree.price}`;
+
+      // Show Modal
+      document.getElementById("tree-modal").classList.remove("hidden");
+    });
+};
+
+// ================  Close Modal ===============
+const closeModal = () => {
+  document.getElementById("tree-modal").classList.add("hidden");
+};
+
 // =================== Display Categories==========================
 const categoriesContainer = document.getElementById("categories-container");
 const displayCategories = (items) => {
@@ -80,14 +107,14 @@ allTrees.addEventListener("click", function () {
   showLoading(false);
 });
 
-// ============== Set Active Button For Toggling ===========
+// ============== Set Reusable Active Button For Toggling ===========
 const setActiveButton = (activeButton) => {
   const allButtons = categoriesContainer.querySelectorAll("button");
   allButtons.forEach((btn) => btn.classList.remove("bg-green-300"));
   activeButton.classList.add("bg-green-300");
 };
 
-// Load Plants by Category
+// =============== Load Plants by Category ===============
 const loadPlantsByCategory = (id, btn) => {
   showLoading(true);
 
